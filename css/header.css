@@ -1,0 +1,93 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 20px 0 16px;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header__brand {
+  font-family: var(--serif);
+  font-size: 17px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  border: none;
+  white-space: nowrap;
+}
+
+.site-nav {
+  display: flex;
+  gap: 22px;
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  overflow-x: auto;
+  scrollbar-width: none;
+  max-width: 100%;
+  white-space: nowrap;
+  margin-left: auto;
+  padding-bottom: 2px;
+}
+.site-nav::-webkit-scrollbar { display: none; }
+
+.site-nav a {
+  color: var(--muted);
+  border: none;              /* the global link underline is replaced by ::after */
+  position: relative;
+  padding-bottom: 5px;
+  transition: color 180ms ease;
+}
+.site-nav a.is-accent { color: var(--accent); }
+
+/* The underline lives in ::after so it can be animated — a real border can't
+   grow from one side. currentColor means it inherits the hover colour. */
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms ease;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible { color: var(--accent); }
+
+.site-nav a:hover::after,
+.site-nav a:focus-visible::after { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav a,
+  .site-nav a::after { transition: none; }
+}
+
+/* On narrow screens the six links can't fit on one line. Rather than leaving
+   them in a scroll strip — where Contact sits off-screen with nothing to
+   suggest it's there — let them wrap so every link is visible. */
+@media (max-width: 720px) {
+  .site-header {
+    padding: 14px 0 12px;
+    gap: 8px 20px;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    white-space: normal;
+    margin-left: 0;
+    gap: 8px 18px;
+    font-size: 12.5px;
+  }
+
+  .site-nav a { padding-bottom: 3px; }
+}

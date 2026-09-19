@@ -1,0 +1,83 @@
+#faq .section-title { max-width: 300px; }
+
+.faq {
+  max-width: 620px;
+  border-top: 1px solid var(--line);
+}
+
+.faq__item { border-bottom: 1px solid var(--line); }
+
+.faq__q {
+  list-style: none;          /* hides the default disclosure triangle */
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 22px 0;
+  cursor: pointer;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ink);
+  transition: color 180ms ease;
+}
+.faq__q::-webkit-details-marker { display: none; }   /* the same, for Safari */
+.faq__q:hover { color: var(--accent); }
+
+/* The sign is two hairlines rather than a "+"/"-" glyph, so one can retract
+   into the other instead of the character swapping abruptly. */
+.faq__sign {
+  position: relative;
+  flex: none;
+  align-self: flex-start;
+  width: 14px;
+  height: 1.5em;        /* the question's line height, so it sits on line one */
+}
+
+.faq__sign::before,
+.faq__sign::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: var(--faint);
+  transition: transform 320ms ease, background-color 180ms ease;
+}
+.faq__sign::before { width: 14px; height: 1px; transform: translate(-50%, -50%); }
+.faq__sign::after  { width: 1px; height: 14px; transform: translate(-50%, -50%); }
+
+.faq__item[open] .faq__sign::after { transform: translate(-50%, -50%) scaleY(0); }
+
+.faq__q:hover .faq__sign::before,
+.faq__q:hover .faq__sign::after { background: var(--accent); }
+
+.faq__a-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 560px;
+  padding-bottom: 26px;
+}
+
+.faq__a-body p {
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--body);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* Slides the answer open. Needs `interpolate-size` in base.css to animate to
+   an unknown height. Browsers without ::details-content snap open instead,
+   which is ordinary <details> behaviour — nothing breaks. */
+.faq__item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition: block-size 340ms ease, content-visibility 340ms allow-discrete;
+}
+.faq__item[open]::details-content { block-size: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .faq__item::details-content,
+  .faq__sign::before,
+  .faq__sign::after { transition: none; }
+}

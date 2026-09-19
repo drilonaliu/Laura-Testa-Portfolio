@@ -1,0 +1,35 @@
+#next .section-title { max-width: 520px; margin-bottom: 52px; }
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 36px;
+}
+
+.steps__item {
+  border-top: 1px solid var(--line-strong);
+  padding-top: 18px;
+}
+.steps__item:first-child { border-top-color: var(--ink); }
+
+.steps__number {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--accent);
+  margin: 0 0 10px;
+}
+
+.steps__title {
+  font-size: 16.5px;
+  line-height: 1.5;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+
+.steps__body {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0;
+  text-wrap: pretty;
+}

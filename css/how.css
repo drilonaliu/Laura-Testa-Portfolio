@@ -1,0 +1,10 @@
+#how .section-title { max-width: 340px; }
+
+.how__body { max-width: 560px; }
+.how__body p {
+  font-size: 17.5px;
+  line-height: 1.75;
+  color: var(--body);
+  margin: 0;
+  text-wrap: pretty;
+}

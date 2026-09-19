@@ -1,0 +1,23 @@
+#approach .section-title { max-width: 520px; margin-bottom: 52px; }
+
+.approach__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  column-gap: 56px;
+  border-top: 1px solid var(--line);
+}
+
+.approach__item {
+  background: var(--bg);
+  padding: 34px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.approach__body {
+  font-size: 16.5px;
+  line-height: 1.7;
+  color: var(--body);
+  margin: 0;
+  max-width: 460px;
+  text-wrap: pretty;
+}

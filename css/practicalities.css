@@ -1,0 +1,41 @@
+#practicalities .section-title { max-width: 520px; margin-bottom: 52px; }
+
+.practicalities__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 40px;
+}
+
+.practicalities__card {
+  background: var(--bg-warm);
+  padding: 30px 28px;
+  transition: transform 260ms ease,
+              background-color 260ms ease,
+              box-shadow 260ms ease;
+}
+
+/* Lifts a little and warms up. The label picks up the accent, which is the
+   same hover language as the nav, the FAQ questions and the buttons.
+   No cursor change — there is nothing to click here. */
+.practicalities__card:hover {
+  transform: translateY(-3px);
+  background: var(--bg-warm-deep);
+  box-shadow: 0 6px 20px rgba(42, 39, 36, 0.07);
+}
+
+.practicalities__card .label-sm { transition: color 200ms ease; }
+.practicalities__card:hover .label-sm { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .practicalities__card,
+  .practicalities__card .label-sm { transition: none; }
+  .practicalities__card:hover { transform: none; }
+}
+
+.practicalities__body {
+  font-size: 16.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0;
+  text-wrap: pretty;
+}
