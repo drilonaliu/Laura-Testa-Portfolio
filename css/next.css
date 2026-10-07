@@ -1,3 +1,6 @@
+/* Shares a page with the contact form below, so the gap between them is
+   tighter than between two separate sections. */
+#next { padding-bottom: 52px; }
 #next .section-title { max-width: 520px; margin-bottom: 52px; }
 
 .steps {
@@ -32,4 +35,54 @@
   color: var(--muted);
   margin: 0;
   text-wrap: pretty;
+}
+
+@media (max-width: 720px) {
+  #next { padding-bottom: 36px; }
+}
+
+/* Step 01 links down to the form below. The title keeps its colour so the
+   row of steps still reads as one set; a small round arrow marks it as a
+   way in, and on hover it fills and nudges down towards the form. */
+.steps__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  border: none;
+}
+
+.steps__link-text {
+  border-bottom: 1px solid var(--line-strong);
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.steps__link-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 50%;
+  color: var(--accent);
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+.steps__link-icon svg { transition: transform 220ms ease; }
+
+.steps__link:hover { color: var(--ink); }
+.steps__link:hover .steps__link-text { border-bottom-color: var(--ink); }
+.steps__link:hover .steps__link-icon,
+.steps__link:focus-visible .steps__link-icon {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.steps__link:hover .steps__link-icon svg { transform: translateY(2px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .steps__link-text,
+  .steps__link-icon,
+  .steps__link-icon svg { transition: none; }
 }

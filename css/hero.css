@@ -33,11 +33,14 @@
   margin: 0 0 34px;
 }
 
-/* The stripes show through while the photo loads, or if it is missing. */
+/* The portrait is a cut-out with a transparent background, so it stands on a
+   soft warm wash from the site palette rather than whatever was behind her. */
 .hero__portrait {
+  width: 100%;
+  max-width: 440px;
+  justify-self: end;     /* stays against the right edge, in line with the nav */
   aspect-ratio: 4 / 5;
-  background: repeating-linear-gradient(135deg,
-    var(--hatch-a) 0 10px, var(--hatch-b) 10px 20px);
+  background: radial-gradient(ellipse at 50% 35%, var(--bg) 0%, var(--bg-warm) 55%, var(--bg-warm-deep) 100%);
   overflow: hidden;
 }
 
@@ -45,9 +48,16 @@
   display: block;
   width: 100%;
   height: 100%;
-  /* Fills the 4:5 box by cropping, so any photo size works undistorted. */
+  /* Fills the 4:5 box by cropping, so any photo size works undistorted.
+     Anchored to the bottom so the cut-out never floats above the frame's edge. */
   object-fit: cover;
-  object-position: center;
+  object-position: center bottom;
+  /* Takes the edge off the studio lighting and warms it towards the palette. */
+  filter: sepia(0.14) saturate(0.88) contrast(0.96) brightness(1.01);
+  /* The photo is cropped right at her hair, so nudge her down for a little
+     headroom. Scaling slightly first keeps the sleeves running off both sides. */
+  transform: translateY(10%) scale(1.04);
+  transform-origin: center bottom;
 }
 
 /* 104px of headroom is most of a phone screen before anything is readable. */

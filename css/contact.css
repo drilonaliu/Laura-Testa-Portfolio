@@ -1,4 +1,4 @@
-#contact { padding-bottom: 96px; }
+#contact { padding-top: 52px; padding-bottom: 96px; }
 
 .contact {
   display: grid;
@@ -25,6 +25,22 @@
   text-wrap: pretty;
 }
 
+.contact__email-label { margin: 36px 0 8px; }
+
+.contact__email {
+  font-family: var(--serif);
+  font-size: 21px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;   /* never wider than a phone screen */
+}
+
+.contact__where {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 28px 0 0;
+}
+
 .contact__form {
   display: flex;
   flex-direction: column;
@@ -37,5 +53,9 @@
 textarea.field { resize: vertical; }
 
 @media (max-width: 720px) {
-  #contact { padding-bottom: 64px; }
+  #contact { padding-top: 36px; padding-bottom: 64px; }
 }
+
+/* Clears the sticky header when "Send a message" scrolls down to here. */
+#message { scroll-margin-top: 96px; }
+@media (max-width: 720px) { #message { scroll-margin-top: 88px; } }

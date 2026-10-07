@@ -6,10 +6,10 @@ Three things are kept apart, so each has exactly one home:
 |---|---|
 | **text + markup** | `index.html` |
 | **styling** | `css/*.css` |
+| **page switching** | `nav.js` |
 | **contact form** | `contact.js` |
 
-Nothing to build, nothing to run. The only script is the one that formats the
-enquiry email.
+Nothing to build, nothing to run.
 
 ## Running it
 
@@ -23,12 +23,28 @@ index.html              the whole page: markup and text together
 css/
   base.css              colour/type tokens, reset, shared patterns
   <section>.css         one per section: header, hero, how, about, approach,
-                        research, practicalities, faq, next, contact, footer
+                        research, practicalities, location, faq, next,
+                        contact, footer
   fonts.css             @font-face rules
 fonts/                  Newsreader + Instrument Sans, self-hosted (works offline)
-images/                 portrait.jpg — the hero photo
+images/                 portrait.png — the hero photo; studio-*.jpg — Location
+                        photos; bacp-registered-member.png — About page badge
+nav.js                  shows one page at a time (About, FAQs, …)
 contact.js              formats the enquiry email for the visitor's mail app
 ```
+
+## Pages
+
+Everything is still in `index.html`, but only one page shows at a time. Each
+`<section>` has a `data-view="..."` naming its page, and clicking a nav link
+fades to that page in the same tab. Sections that share a `data-view` appear
+together: How I work + Approach & Specialisms are the How I work page,
+About + Research & Film are the About page, What Happens Next +
+the form are the Contact page.
+
+To move a section to a different page, change its `data-view`. The address bar
+follows along (`/#about`), so pages can be linked to directly and Back works.
+With JavaScript off, the site falls back to one long scrolling page.
 
 ## Editing text
 
@@ -78,26 +94,15 @@ without depending on the visitor's setup.
 
 ## The portrait photo
 
-Save the photo over `images/portrait.jpg` and it appears — no code change.
+`images/portrait.png` is the hero photo. It's a cut-out with a transparent
+background, standing on a warm wash drawn in `css/hero.css`, with a light
+filter there that warms it towards the site's colours.
 
-It's referenced through `content.js` like everything else:
-
-```js
-portrait: {
-  src: "images/portrait.jpg",
-  alt: "Laura Kajtazi-Testa"
-}
-```
-
-So if the photo is a `.png` or you'd rather name it something else, change `src`
-to match and leave the markup alone. The `alt` text is what screen readers
-announce and what shows if the image ever fails to load.
-
-What's in `images/portrait.jpg` right now is a striped placeholder at the right
-4:5 shape. Any photo size works: the CSS crops it to fill that box
-(`object-fit: cover`) rather than squashing it, so a portrait-orientation shot
-around 800×1000 or larger will look best. The stripes stay visible behind the
-image while it loads.
+To replace it, save the new photo over `images/portrait.png`. A normal photo
+with its own background works too: it just covers the wash. If it's a `.jpg`,
+change `src` on the `<img class="hero__portrait-img">` in `index.html` to match.
+The CSS crops it to fill a 4:5 box, so a portrait-orientation shot around
+800×1000 or larger looks best.
 
 ## Styling
 
@@ -111,9 +116,3 @@ colour in one place:
 `base.css` also holds the handful of patterns used by more than one section
 (`.section`, `.split`, `.eyebrow`, `.section-title`, `.btn`, `.field`).
 Anything used by a single section lives in that section's own file.
-
-## Placeholders still to fill
-
-- `about.accreditation` and `footer.copyright` — registering body + membership number
-- `research.paper.linkText` / `linkHref` — link to the published paper (currently `example.com`)
-- `images/portrait.jpg` is a placeholder — replace it with the real photo

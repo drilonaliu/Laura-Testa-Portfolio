@@ -41,3 +41,15 @@
   color: var(--body);
   margin: 0;
 }
+
+/* The badge file has a solid white background. Multiply lets the cream page
+   show through the white without touching the logo's own colours, which the
+   BACP asks members not to alter. */
+.about__badge {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  margin-top: 22px;
+  mix-blend-mode: multiply;
+}

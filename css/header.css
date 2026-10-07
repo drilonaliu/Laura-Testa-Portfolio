@@ -14,8 +14,8 @@
 
 .site-header__brand {
   font-family: var(--serif);
-  font-size: 17px;
-  letter-spacing: 0.02em;
+  font-size: 29px;
+  letter-spacing: 0.01em;
   color: var(--ink);
   border: none;
   white-space: nowrap;
@@ -43,7 +43,6 @@
   padding-bottom: 5px;
   transition: color 180ms ease;
 }
-.site-nav a.is-accent { color: var(--accent); }
 
 /* The underline lives in ::after so it can be animated — a real border can't
    grow from one side. currentColor means it inherits the hover colour. */
@@ -61,19 +60,23 @@
 }
 
 .site-nav a:hover,
-.site-nav a:focus-visible { color: var(--accent); }
+.site-nav a:focus-visible,
+.site-nav a[aria-current="page"] { color: var(--accent); }
 
 .site-nav a:hover::after,
-.site-nav a:focus-visible::after { transform: scaleX(1); }
+.site-nav a:focus-visible::after,
+.site-nav a[aria-current="page"]::after { transform: scaleX(1); }
 
 @media (prefers-reduced-motion: reduce) {
   .site-nav a,
   .site-nav a::after { transition: none; }
 }
 
-/* On narrow screens the six links can't fit on one line. Rather than leaving
-   them in a scroll strip — where Contact sits off-screen with nothing to
-   suggest it's there — let them wrap so every link is visible. */
+/* The menu button only exists on phones, and only with JavaScript to work it. */
+.site-header__toggle { display: none; }
+
+/* On narrow screens the seven links can't fit on one line. Without JavaScript
+   they wrap so every link is still visible. */
 @media (max-width: 720px) {
   .site-header {
     padding: 14px 0 12px;
@@ -90,4 +93,94 @@
   }
 
   .site-nav a { padding-bottom: 3px; }
+
+  .site-header__brand { font-size: 24px; }
+}
+
+/* With JavaScript, phones get the usual menu button instead: the name on the
+   left, a ☰ on the right, and the links stacked in a panel that drops down
+   beneath. Each link is a full-width row, big enough to tap. */
+@media (max-width: 720px) {
+  .js .site-header {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+  }
+
+  .js .site-header__toggle {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px;     /* lines the bars up with the page edge, not the tap area */
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* Three bars: the span is the middle one, its ::before and ::after the
+     outer two. Opening the menu folds them into an ×. */
+  .site-header__toggle-bars,
+  .site-header__toggle-bars::before,
+  .site-header__toggle-bars::after {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 220ms ease, opacity 220ms ease;
+  }
+  .site-header__toggle-bars { position: relative; }
+  .site-header__toggle-bars::before,
+  .site-header__toggle-bars::after {
+    content: "";
+    position: absolute;
+    left: 0;
+  }
+  .site-header__toggle-bars::before { top: -7px; }
+  .site-header__toggle-bars::after  { top: 7px; }
+
+  .site-header.is-open .site-header__toggle-bars { background: transparent; }
+  .site-header.is-open .site-header__toggle-bars::before { transform: translateY(7px) rotate(45deg); }
+  .site-header.is-open .site-header__toggle-bars::after  { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Closed, the panel has no height; open, it slides to its natural height
+     (interpolate-size in base.css; browsers without it just snap open). */
+  .js .site-nav {
+    flex-basis: 100%;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    padding: 0;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    transition: height 260ms ease, visibility 0s 260ms;
+  }
+
+  .js .site-header.is-open .site-nav {
+    height: auto;
+    visibility: visible;
+    margin-top: 12px;
+    transition: height 260ms ease, visibility 0s;
+  }
+
+  .js .site-nav a {
+    padding: 15px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  /* The sliding underline doesn't suit a stacked list; colour marks the
+     current page instead. */
+  .js .site-nav a::after { display: none; }
+}
+
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+  .site-header__toggle-bars,
+  .site-header__toggle-bars::before,
+  .site-header__toggle-bars::after,
+  .js .site-nav { transition: none; }
 }

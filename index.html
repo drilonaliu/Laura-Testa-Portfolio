@@ -4,18 +4,10 @@
 <title>Laura Kajtazi-Testa — Integrative Counsellor, London</title>
 
 <script>
-  /* On a refresh, start at the top instead of jumping back down to whichever
-     section you were reading. This sits inline in <head> so it runs before the
-     browser acts on the #hash — an external file would load too late.
-
-     Only reloads are reset. A link someone shares, like /#practicalities, still
-     lands where it should, and the back button still restores your position. */
-  if (performance.getEntriesByType('navigation')[0]?.type === 'reload') {
-    history.scrollRestoration = 'manual';
-    if (location.hash) {
-      history.replaceState(null, '', location.pathname + location.search);
-    }
-  }
+  /* Lets the stylesheet hide every page but the current one before anything is
+     drawn, so there's no flash of the whole site on load. Without JavaScript
+     the class never appears and the site falls back to one long scrolling page. */
+  document.documentElement.classList.add('js');
 </script>
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/base.css">
@@ -26,6 +18,7 @@
 <link rel="stylesheet" href="css/approach.css">
 <link rel="stylesheet" href="css/research.css">
 <link rel="stylesheet" href="css/practicalities.css">
+<link rel="stylesheet" href="css/location.css">
 <link rel="stylesheet" href="css/faq.css">
 <link rel="stylesheet" href="css/next.css">
 <link rel="stylesheet" href="css/contact.css">
@@ -36,29 +29,35 @@
 
   <header class="site-header">
     <a href="#top" class="site-header__brand">Laura Kajtazi-Testa</a>
-    <nav class="site-nav">
+    <button type="button" class="site-header__toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+      <span class="site-header__toggle-bars" aria-hidden="true"></span>
+    </button>
+    <nav class="site-nav" id="site-nav">
+      <a href="#top">Home</a>
       <a href="#how">How I work</a>
-      <a href="#about">About</a>
-      <a href="#approach">Approach</a>
       <a href="#practicalities">Practicalities</a>
       <a href="#faq">FAQs</a>
-      <a href="#contact" class="is-accent">Contact</a>
+      <a href="#about">About</a>
+      <a href="#location">Location</a>
+      <a href="#contact">Contact</a>
     </nav>
   </header>
 
-  <section id="top" class="hero">
+  <main class="views" tabindex="-1">
+
+  <section id="top" class="hero" data-view="top">
     <div class="hero__text">
       <h1 class="hero__heading">Integrative Counsellor offering therapy to individual adults</h1>
       <p class="hero__intro">I offer a warm, thoughtful space to work through whatever's brought you here, whether that's something specific or just a sense that things aren't quite right. However you arrive, we'll find a way to work with it together.</p>
-      <p class="hero__credentials">Integrative Counselling, The Minster Centre&nbsp; ·&nbsp; MSc Psychology, Kingston University&nbsp; ·&nbsp; London, in-person only</p>
+      <p class="hero__credentials">Integrative Counselling, The Minster Centre&nbsp; ·&nbsp; MSc Psychology, Kingston University&nbsp; ·&nbsp; London, in person and online&nbsp; ·&nbsp; BACP Registered Member</p>
       <a href="#contact" class="btn">Send a message</a>
     </div>
     <div class="hero__portrait">
-      <img class="hero__portrait-img" src="images/portrait.jpg" alt="Laura Kajtazi-Testa">
+      <img class="hero__portrait-img" src="images/portrait.png" alt="Laura Kajtazi-Testa">
     </div>
   </section>
 
-  <section id="how" class="section split">
+  <section id="how" class="section split" data-view="how">
     <div>
       <p class="eyebrow">How I Work</p>
       <h2 class="section-title">Understanding isn't always enough to change things.</h2>
@@ -68,36 +67,7 @@
     </div>
   </section>
 
-  <section id="about" class="section">
-    <div class="split">
-      <div>
-        <p class="eyebrow">About</p>
-        <h2 class="section-title">A practice built on research and lived experience</h2>
-      </div>
-      <div class="about__prose">
-          <p>My route into this work wasn't a straight line. I studied psychology across two countries before completing an MSc, and my research, published in the Journal of Clinical Child Psychology and Psychiatry, examined ambiguous loss in the mothers of the missing in Kosovo.</p>
-          <p>I later directed and produced Waiting, a documentary on ambiguous loss that won Best National Film at Dokufest. Before that, I spent years working in war and post-war environments, in the field with international human rights organisations and press during the conflicts in Kosovo, southern Serbia and Macedonia. That work shaped my capacity to stay steady with distress that doesn't resolve easily or quickly.</p>
-          <p>I've also worked closely alongside speech and language therapists, including direct experience of aphasia and the ways it can disrupt communication. It's given me a particular patience for moments when words aren't enough, and for finding other ways for someone to be understood.</p>
-          <p>I also bring a strong professional interest in the third culture kid experience: the particular kind of identity that forms when "where are you from" never has a simple answer.</p>
-      </div>
-    </div>
-    <div class="about__credentials">
-      <div>
-        <p class="label">Core training</p>
-        <ul class="about__training">
-            <li>Integrative Counselling training, The Minster Centre, London</li>
-            <li>MSc Psychology, Kingston University, London</li>
-            <li>BA Psychology, Hunter College &amp; New York University (NYU), New York</li>
-        </ul>
-      </div>
-      <div>
-        <p class="label">Accreditation</p>
-        <p class="about__accreditation">[Add your registering body here, e.g. BACP / UKCP / HCPC registration number]</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="approach" class="section">
+  <section id="approach" class="section" data-view="how">
     <p class="eyebrow">Approach &amp; Specialisms</p>
     <h2 class="section-title">Grounded, integrative, and led by what you actually need.</h2>
     <div class="approach__grid">
@@ -120,33 +90,13 @@
     </div>
   </section>
 
-  <section id="research" class="section split">
-    <div>
-      <p class="eyebrow">Research &amp; Film</p>
-      <h2 class="section-title">Beyond the consulting room</h2>
-    </div>
-    <div class="research__items">
-      <div>
-        <p class="label-sm label-accent">Published research — Ambiguous loss in the mothers of the missing</p>
-        <p class="research__body">My research on the effects of ambiguous loss on mothers of the missing in Kosovo, published in the Journal of Clinical Child Psychology and Psychiatry, Sage Publications.</p>
-        <blockquote class="research__quote">“Grief without a body, without a funeral, without an ending, is still grief. Naming it is often the first relief a person gets.”</blockquote>
-        <a class="research__link" href="https://www.example.com">[Add link to the paper]</a>
-      </div>
-      <div>
-        <p class="label-sm label-accent">Documentary — Waiting</p>
-        <p class="research__body research__body--tight">A documentary I directed and produced on ambiguous loss, awarded Best National Film at Dokufest International Documentary and Short Film Festival.</p>
-        <a class="research__link" href="https://www.waitingstill.com">waitingstill.com</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="practicalities" class="section">
+  <section id="practicalities" class="section" data-view="practicalities">
     <p class="eyebrow">Practicalities</p>
     <h2 class="section-title">Sessions, fees and confidentiality</h2>
     <div class="practicalities__grid">
         <div class="practicalities__card">
           <p class="label-sm">Format</p>
-          <p class="practicalities__body">In-person sessions only, in a quiet, private consulting room in London.</p>
+          <p class="practicalities__body">In person, in a quiet, private <a href="#location">consulting room in London</a>, and online by video call.</p>
         </div>
         <div class="practicalities__card">
           <p class="label-sm">Fees</p>
@@ -154,12 +104,12 @@
         </div>
         <div class="practicalities__card">
           <p class="label-sm">Confidentiality</p>
-          <p class="practicalities__body">What you bring stays between us, within the professional and legal limits explained at your first session. See the FAQs below for the full details.</p>
+          <p class="practicalities__body">What you bring stays between us, within the professional and legal limits explained at your first session. See the <a href="#faq">FAQs</a> for the full details.</p>
         </div>
     </div>
   </section>
 
-  <section id="faq" class="section split">
+  <section id="faq" class="section split" data-view="faq">
     <div>
       <p class="eyebrow">Frequently Asked Questions</p>
       <h2 class="section-title">A few things people usually want to know</h2>
@@ -202,7 +152,7 @@
             <span class="faq__sign" aria-hidden="true"></span>
           </summary>
           <div class="faq__a-body">
-            <p>Your session time is held for you alone, so if you're unable to attend and don't give enough notice, the full session fee still applies. If I cancel a session you will not be charged. Any planned breaks, such as holidays, will always be agreed between us in advance.</p>
+            <p>Your session time is held for you alone, so if you're unable to attend, the full session fee still applies. If I cancel a session you will not be charged. Any planned breaks, such as holidays, will always be agreed between us in advance.</p>
           </div>
         </details>
         <details class="faq__item" name="faq">
@@ -217,13 +167,106 @@
           </div>
   </section>
 
-  <section id="next" class="section">
+  <section id="about" class="section" data-view="about">
+    <div class="split">
+      <div>
+        <p class="eyebrow">About</p>
+        <h2 class="section-title">A practice built on research and lived experience</h2>
+      </div>
+      <div class="about__prose">
+          <p>My route into this work wasn't a straight line. I studied psychology across two countries before completing an MSc, and my research, published in the Journal of Clinical Child Psychology and Psychiatry, examined ambiguous loss in the mothers of the missing in Kosovo.</p>
+          <p>I later directed and produced Waiting, a documentary on ambiguous loss that won Best National Film at Dokufest. Before that, I spent years working in war and post-war environments, in the field with international human rights organisations and press during the conflicts in Kosovo, southern Serbia and Macedonia. That work shaped my capacity to stay steady with distress that doesn't resolve easily or quickly.</p>
+          <p>I've also worked closely alongside speech and language therapists, including direct experience of aphasia and the ways it can disrupt communication. It's given me a particular patience for moments when words aren't enough, and for finding other ways for someone to be understood.</p>
+          <p>I also bring a strong professional interest in the third culture kid experience: the particular kind of identity that forms when "where are you from" never has a simple answer.</p>
+      </div>
+    </div>
+    <div class="about__credentials">
+      <div>
+        <p class="label">Core training</p>
+        <ul class="about__training">
+            <li>Integrative Counselling training, The Minster Centre, London</li>
+            <li>MSc Psychology, Kingston University, London</li>
+            <li>BA Psychology, Hunter College &amp; New York University (NYU), New York</li>
+        </ul>
+      </div>
+      <div>
+        <p class="label">Accreditation</p>
+        <p class="about__accreditation">Registered Member of the British Association for Counselling and Psychotherapy (MBACP), membership number 422034.</p>
+        <img class="about__badge" src="images/bacp-registered-member.png" alt="BACP Registered Member 422034, MBACP. BACP is accredited by the Professional Standards Authority." loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section id="research" class="section split" data-view="about">
+    <div>
+      <p class="eyebrow">Research &amp; Film</p>
+      <h2 class="section-title">Beyond the consulting room</h2>
+    </div>
+    <div class="research__items">
+      <div>
+        <p class="label-sm label-accent">Published research — Ambiguous loss in the mothers of the missing</p>
+        <p class="research__body">My research on the effects of ambiguous loss on mothers of the missing in Kosovo, published in the Journal of Clinical Child Psychology and Psychiatry, Sage Publications.</p>
+        <blockquote class="research__quote">“Grief without a body, without a funeral, without an ending, is still grief. Naming it is often the first relief a person gets.”</blockquote>
+        <a class="research__link" href="https://journals.sagepub.com/doi/abs/10.1177/1359104518755221" target="_blank" rel="noopener">Read the paper</a>
+      </div>
+      <div>
+        <p class="label-sm label-accent">Documentary — Waiting</p>
+        <p class="research__body research__body--tight">A documentary I directed and produced on ambiguous loss, awarded Best National Film at Dokufest International Documentary and Short Film Festival.</p>
+        <a class="research__link" href="https://vimeo.com/270383113" target="_blank" rel="noopener">Watch Waiting on Vimeo</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="location" class="section" data-view="location">
+    <p class="eyebrow">Location</p>
+    <h2 class="section-title">A quiet, private room in London</h2>
+    <p class="location__intro">Sessions take place in a calm consulting room in London. If getting there isn't practical, we can meet online by video call instead.</p>
+
+    <!-- Studio photos. Save each one into images/ under these names and it
+         appears. Until then the striped placeholder shows. To add a photo, copy
+         a <figure> and change the file name; the first one is shown larger. -->
+    <div class="location__gallery">
+      <figure class="location__photo">
+        <img src="images/studio-1.jpg" alt="The consulting room: two armchairs, a sofa and a large window" loading="lazy" onerror="this.remove()">
+      </figure>
+      <figure class="location__photo">
+        <img src="images/studio-2.jpg" alt="Two armchairs either side of a small table and lamp" loading="lazy" onerror="this.remove()">
+      </figure>
+      <figure class="location__photo">
+        <img src="images/studio-3.jpg" alt="The outside of the building, a brick warehouse with a blue front door" loading="lazy" onerror="this.remove()">
+      </figure>
+    </div>
+
+    <!-- To change the location, edit the address text, the map's q= (spaces
+         become +) and the "Open in Google Maps" link, which is the share link
+         copied from the Google Maps app. -->
+    <div class="location__find">
+      <div>
+        <p class="label">Address</p>
+        <address class="location__address">
+          North London / Archway<br>
+          25 Bickerton Road<br>
+          N19 5JT
+        </address>
+        <a class="location__map-link" href="https://maps.app.goo.gl/8o2LVfqxX6c6eoYN9" target="_blank" rel="noopener">Open in Google Maps</a>
+      </div>
+      <div class="location__map">
+        <iframe
+          src="https://maps.google.com/maps?q=25+Bickerton+Road,+London+N19+5JT&amp;z=15&amp;output=embed"
+          title="Map showing the consulting room at 25 Bickerton Road, London N19 5JT"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section id="next" class="section" data-view="contact">
     <p class="eyebrow">What Happens Next</p>
     <h2 class="section-title">Getting started, step by step</h2>
     <div class="steps">
         <div class="steps__item">
           <p class="steps__number">01</p>
-          <p class="steps__title">Send a message</p>
+          <p class="steps__title"><a class="steps__link" href="#message"><span class="steps__link-text">Send a message</span><span class="steps__link-icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9"/></svg></span></a></p>
           <p class="steps__body">A few lines about what's going on for you is plenty. I get back to you within two working days.</p>
         </div>
         <div class="steps__item">
@@ -244,12 +287,17 @@
     </div>
   </section>
 
-  <section id="contact" class="section">
-    <div class="contact">
+  <section id="contact" class="section" data-view="contact">
+    <div class="contact" id="message">
       <div>
         <p class="eyebrow">Contact</p>
         <h2 class="contact__heading">Ready to talk? Send a message.</h2>
         <p class="contact__body">Tell me a little about what's bringing you here, and I'll reply within two working days.</p>
+
+        <p class="label contact__email-label">Or email me directly</p>
+        <a class="contact__email" href="mailto:laura@lauraktherapy.com">laura@lauraktherapy.com</a>
+
+        <p class="contact__where">Sessions are in London or online. <a href="#location">See the consulting room</a></p>
       </div>
       <!-- Submitting hands the message to the visitor's own email app (Mail,
            Outlook, or Gmail if that is their default), pre-filled. They still
@@ -278,10 +326,16 @@
     </div>
   </section>
 
+  </main>
+
   <footer class="site-footer">
-    <p>© 2026 Laura Kajtazi-Testa. [Registering body + membership number]</p>
+    <div>
+      <p>© 2026 Laura Kajtazi-Testa, MBACP. BACP Registered Member 422034.</p>
+      <p>laura@lauraktherapy.com</p>
+    </div>
     <p class="site-footer__crisis">If you're in crisis, please contact your GP, 111, or the Samaritans on 116 123.</p>
   </footer>
 </div>
+<script src="nav.js"></script>
 <script src="contact.js"></script>
 </body></html>
